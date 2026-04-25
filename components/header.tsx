@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
-import { Eye, Menu, Phone, MapPin, Clock, X, ChevronRight } from "lucide-react"
+import { Menu, Phone, MapPin, Clock, X, ChevronRight } from "lucide-react"
 
 const navigation = [
   { name: "Home", href: "#" },
@@ -23,8 +24,7 @@ export function Header() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20)
-      
-      // Update active section
+
       const sections = navigation.map(n => n.href.replace("#", "")).filter(Boolean)
       for (const section of sections.reverse()) {
         const el = document.getElementById(section)
@@ -53,12 +53,18 @@ export function Header() {
             </span>
           </div>
           <div className="flex items-center gap-4 sm:gap-6">
-            <a href="tel:+911234567890" className="flex items-center gap-1.5 text-xs sm:text-sm hover:text-[#F2B035] transition-colors">
+            <a
+              href="tel:+911234567890"
+              className="flex items-center gap-1.5 text-xs sm:text-sm hover:text-[#F2B035] transition-colors"
+            >
               <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
               <span className="hidden xs:inline">+91 1234 567 890</span>
               <span className="xs:hidden">Call</span>
             </a>
-            <a href="#contact" className="hidden md:flex items-center gap-1.5 text-sm hover:text-[#F2B035] transition-colors">
+            <a
+              href="#contact"
+              className="hidden md:flex items-center gap-1.5 text-sm hover:text-[#F2B035] transition-colors"
+            >
               <MapPin className="h-4 w-4" />
               <span>Location</span>
             </a>
@@ -67,36 +73,37 @@ export function Header() {
       </div>
 
       {/* Main navigation */}
-      <div className={`bg-white/95 backdrop-blur-lg border-b border-gray-100 transition-all duration-500 ${isScrolled ? "py-2" : "py-3 sm:py-4"}`}>
+      <div
+        className={`bg-white/95 backdrop-blur-lg border-b border-gray-100 transition-all duration-500 ${
+          isScrolled ? "py-2" : "py-3 sm:py-4"
+        }`}
+      >
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4">
+
           {/* Logo */}
-          <Link href="#" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="relative">
-              <div className={`flex items-center justify-center rounded-xl bg-gradient-to-br from-[#3B2E8C] to-[#1F5AA6] shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:scale-105 ${isScrolled ? "h-10 w-10 sm:h-11 sm:w-11" : "h-11 w-11 sm:h-12 sm:w-12"}`}>
-                <Eye className={`text-white transition-all ${isScrolled ? "h-5 w-5 sm:h-6 sm:w-6" : "h-6 w-6 sm:h-7 sm:w-7"}`} />
-              </div>
-              <div className="absolute -right-0.5 -top-0.5 h-3 w-3 sm:h-3.5 sm:w-3.5 rounded-full bg-[#F22233] border-2 border-white animate-pulse" />
-            </div>
-            <div className="flex flex-col">
-              <span className={`font-bold leading-tight transition-all ${isScrolled ? "text-lg sm:text-xl" : "text-xl sm:text-2xl"}`}>
-                <span className="text-[#3B2E8C]">Amma</span>{" "}
-                <span className="text-[#F22233]">Eye Care</span>
-              </span>
-              <span className="text-[10px] sm:text-xs font-semibold text-[#3B2E8C]/70 tracking-[0.2em] uppercase">Hospital</span>
-            </div>
+          <Link href="#" className="flex items-center group">
+            <Image
+              src="/amma-eye-care-logo.png"
+              alt="Amma Eye Care"
+              width={200}
+              height={50}
+              className="h-10 w-auto object-contain transition-opacity duration-200 group-hover:opacity-85"
+            />
           </Link>
 
           {/* Desktop navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             {navigation.map((item) => {
-              const isActive = activeSection === item.href.replace("#", "") || (item.href === "#" && activeSection === "")
+              const isActive =
+                activeSection === item.href.replace("#", "") ||
+                (item.href === "#" && activeSection === "")
               return (
                 <Link
                   key={item.name}
                   href={item.href}
                   className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                    isActive 
-                      ? "text-[#F22233] bg-[#F22233]/5" 
+                    isActive
+                      ? "text-[#F22233] bg-[#F22233]/5"
                       : "text-gray-600 hover:text-[#3B2E8C] hover:bg-gray-50"
                   }`}
                 >
@@ -109,9 +116,9 @@ export function Header() {
             })}
           </nav>
 
-          {/* CTA buttons */}
+          {/* CTA button */}
           <div className="hidden lg:flex items-center gap-3">
-            <Button 
+            <Button
               asChild
               className="bg-[#F22233] text-white hover:bg-[#d91e2c] shadow-lg shadow-[#F22233]/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#F22233]/30 hover:scale-105 btn-shine"
             >
@@ -124,7 +131,7 @@ export function Header() {
 
           {/* Mobile menu */}
           <div className="flex items-center gap-2 lg:hidden">
-            <Button 
+            <Button
               asChild
               size="sm"
               className="bg-[#F22233] text-white hover:bg-[#d91e2c] shadow-md text-xs sm:text-sm"
@@ -134,25 +141,42 @@ export function Header() {
                 <span className="hidden sm:inline">Call Now</span>
               </a>
             </Button>
-            
+
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-[#3B2E8C] hover:bg-[#3B2E8C]/5">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-[#3B2E8C] hover:bg-[#3B2E8C]/5"
+                >
                   <Menu className="h-5 w-5 sm:h-6 sm:w-6" />
                   <span className="sr-only">Toggle menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[350px] p-0 border-l-0">
                 <div className="flex h-full flex-col bg-gradient-to-b from-white to-gray-50">
+
                   {/* Mobile menu header */}
                   <div className="flex items-center justify-between border-b border-gray-100 p-4 sm:p-5 bg-white">
-                    <Link href="#" className="flex items-center gap-2" onClick={() => setIsOpen(false)}>
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-[#3B2E8C] to-[#1F5AA6]">
-                        <Eye className="h-5 w-5 text-white" />
-                      </div>
-                      <span className="font-bold text-[#3B2E8C]">Amma Eye Care</span>
+                    <Link
+                      href="#"
+                      className="flex items-center"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <Image
+                        src="/amma-eye-care-logo.png"
+                        alt="Amma Eye Care"
+                        width={140}
+                        height={35}
+                        className="h-8 w-auto object-contain"
+                      />
                     </Link>
-                    <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="hover:bg-gray-100 rounded-full">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setIsOpen(false)}
+                      className="hover:bg-gray-100 rounded-full"
+                    >
                       <X className="h-5 w-5 text-gray-500" />
                     </Button>
                   </div>
@@ -175,7 +199,7 @@ export function Header() {
 
                   {/* Mobile menu footer */}
                   <div className="border-t border-gray-100 p-4 sm:p-5 bg-white space-y-3">
-                    <Button 
+                    <Button
                       className="w-full h-12 bg-[#F22233] text-white hover:bg-[#d91e2c] shadow-lg shadow-[#F22233]/20 text-base"
                       onClick={() => setIsOpen(false)}
                       asChild
@@ -186,21 +210,30 @@ export function Header() {
                       </Link>
                     </Button>
                     <div className="flex items-center justify-center gap-4 pt-2 text-sm text-gray-500">
-                      <a href="tel:+911234567890" className="flex items-center gap-1.5 hover:text-[#F22233]">
+                      <a
+                        href="tel:+911234567890"
+                        className="flex items-center gap-1.5 hover:text-[#F22233]"
+                      >
                         <Phone className="h-4 w-4" />
                         Call Us
                       </a>
                       <span className="text-gray-300">|</span>
-                      <a href="#contact" className="flex items-center gap-1.5 hover:text-[#F22233]" onClick={() => setIsOpen(false)}>
+                      <a
+                        href="#contact"
+                        className="flex items-center gap-1.5 hover:text-[#F22233]"
+                        onClick={() => setIsOpen(false)}
+                      >
                         <MapPin className="h-4 w-4" />
                         Directions
                       </a>
                     </div>
                   </div>
+
                 </div>
               </SheetContent>
             </Sheet>
           </div>
+
         </div>
       </div>
     </header>

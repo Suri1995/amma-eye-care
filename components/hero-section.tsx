@@ -9,24 +9,18 @@ function AnimatedCounter({ end, suffix = "", duration = 2000 }: { end: number; s
   const [count, setCount] = useState(0)
   const [isVisible, setIsVisible] = useState(false)
   const ref = useRef<HTMLSpanElement>(null)
-  
+
   useEffect(() => {
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true)
-        }
-      },
+      ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
       { threshold: 0.1 }
     )
-    
     if (ref.current) observer.observe(ref.current)
     return () => observer.disconnect()
   }, [])
-  
+
   useEffect(() => {
     if (!isVisible) return
-    
     let startTime: number
     const animate = (currentTime: number) => {
       if (!startTime) startTime = currentTime
@@ -35,245 +29,258 @@ function AnimatedCounter({ end, suffix = "", duration = 2000 }: { end: number; s
       setCount(Math.floor(easeOut * end))
       if (progress < 1) requestAnimationFrame(animate)
     }
-    
     requestAnimationFrame(animate)
   }, [end, duration, isVisible])
-  
-  return <span ref={ref}>{count.toLocaleString()}{suffix}</span>
+
+  const display = end >= 1000 ? `${Math.round(count / 1000)}K` : count.toLocaleString()
+  return <span ref={ref}>{display}{suffix}</span>
 }
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-white via-gray-50/50 to-[#3B2E8C]/5 min-h-[calc(100vh-140px)] flex items-center">
-      {/* Animated background elements */}
+    <section className="relative overflow-hidden bg-gradient-to-br from-white via-gray-50/30 to-[#3B2E8C]/5 min-h-[calc(100vh-140px)] flex items-center pb-16 sm:pb-0">
+
+      {/* Animated background orbs */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute right-0 top-0 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-[#F22233]/10 to-transparent blur-3xl animate-pulse-slow" />
-        <div className="absolute -left-32 bottom-0 h-[500px] w-[500px] rounded-full bg-gradient-to-tr from-[#3B2E8C]/10 to-transparent blur-3xl animate-pulse-slow" style={{ animationDelay: "1.5s" }} />
-        <div className="absolute left-1/2 top-1/4 h-[300px] w-[300px] rounded-full bg-[#1F5AA6]/5 blur-3xl animate-float-delayed" />
-        
-        {/* Decorative grid pattern */}
-        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%233B2E8C' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
+        <div className="absolute right-0 top-0 h-[700px] w-[700px] rounded-full bg-[#F22233]/8 blur-[120px] animate-pulse-slow" />
+        <div className="absolute -left-40 bottom-0 h-[600px] w-[600px] rounded-full bg-[#3B2E8C]/8 blur-[120px] animate-pulse-slow [animation-delay:1.5s]" />
+        <div className="absolute left-1/2 top-1/3 h-[400px] w-[400px] -translate-x-1/2 rounded-full bg-[#1F5AA6]/6 blur-[100px] animate-pulse-slow [animation-delay:3s]" />
+        {/* Subtle grid */}
+        <div className="absolute inset-0 opacity-[0.018]" style={{ backgroundImage: "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%233B2E8C'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")" }} />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-4 py-8 sm:py-12 md:py-16 lg:py-20 w-full">
-        <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-          {/* Content */}
+      <div className="relative mx-auto max-w-7xl px-4 py-10 sm:py-14 md:py-18 lg:py-20 w-full">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16 xl:gap-20">
+
+          {/* ── LEFT: Content ── */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+
             {/* Trust badges */}
-            <div className="mb-6 sm:mb-8 flex flex-wrap justify-center lg:justify-start gap-2 sm:gap-3">
-              <div className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-[#F2B035]/10 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-[#F2B035] border border-[#F2B035]/20 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
-                <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-[#F2B035]" />
-                <span>4.9 / 5 Rating</span>
-              </div>
-              <div className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-green-50 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-green-600 border border-green-200 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-                <Calendar className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span>Available Today</span>
-              </div>
-              <div className="flex items-center gap-1.5 sm:gap-2 rounded-full bg-[#3B2E8C]/10 px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium text-[#3B2E8C] border border-[#3B2E8C]/20 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
-                <Shield className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                <span>ISO Certified</span>
-              </div>
+            <div className="mb-7 flex flex-wrap justify-center lg:justify-start gap-2">
+              {[
+                { icon: <Star className="h-3.5 w-3.5 fill-[#E8A020] text-[#E8A020]" />, label: "4.9 / 5 rating", cls: "bg-[#FAEEDA] text-[#633806] border-[#FAC775]" },
+                { icon: <Calendar className="h-3.5 w-3.5" />, label: "Available today", cls: "bg-[#EAF3DE] text-[#27500A] border-[#C0DD97]" },
+                { icon: <Shield className="h-3.5 w-3.5" />, label: "ISO certified", cls: "bg-[#EEEDFE] text-[#3C3489] border-[#CECBF6]" },
+              ].map((b, i) => (
+                <span
+                  key={b.label}
+                  className={`flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium animate-fade-in-up ${b.cls}`}
+                  style={{ animationDelay: `${(i + 1) * 100}ms` }}
+                >
+                  {b.icon} {b.label}
+                </span>
+              ))}
             </div>
 
-            {/* Main heading */}
-            <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-              <span className="text-balance">Your Vision, Our </span>
-              <span className="relative inline-block">
-                <span className="text-gradient-primary">Expertise</span>
-                <svg className="absolute -bottom-1 left-0 w-full h-2 sm:h-3" viewBox="0 0 200 12" fill="none">
-                  <path d="M2 8C50 2 150 2 198 8" stroke="#F22233" strokeWidth="3" strokeLinecap="round" className="animate-draw" />
-                </svg>
+            {/* Heading */}
+            <h1
+              className="mb-5 text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-bold tracking-tight text-gray-900 leading-[1.08] animate-fade-in-up"
+              style={{ animationDelay: "300ms", fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+            >
+              Your vision,{" "}
+              <span className="block">
+                our{" "}
+                <span className="relative inline-block text-[#D41A2B]">
+                  expertise
+                  <svg className="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 10" fill="none" style={{ height: "10px" }}>
+                    <path
+                      d="M2 7 Q100 1 198 7"
+                      stroke="#D41A2B"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                      fill="none"
+                      className="animate-draw"
+                    />
+                  </svg>
+                </span>
               </span>
             </h1>
 
-            <p className="mb-6 sm:mb-8 max-w-lg text-base sm:text-lg text-gray-600 text-pretty animate-fade-in-up" style={{ animationDelay: "0.5s" }}>
+            <p
+              className="mb-7 max-w-md text-base sm:text-lg text-gray-500 leading-relaxed animate-fade-in-up"
+              style={{ animationDelay: "400ms" }}
+            >
               Experience world-class eye care with advanced treatments, experienced specialists, and compassionate service for the entire family.
             </p>
 
-            {/* Feature list */}
-            <div className="mb-6 sm:mb-8 grid grid-cols-2 gap-2 sm:gap-3 w-full max-w-md animate-fade-in-up" style={{ animationDelay: "0.6s" }}>
-              {["Painless Procedures", "Quick Recovery", "Affordable Care", "Latest Technology"].map((feature) => (
-                <div key={feature} className="flex items-center gap-2 text-xs sm:text-sm text-gray-700">
-                  <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-[#F22233] flex-shrink-0" />
-                  <span>{feature}</span>
+            {/* Feature checklist */}
+            <div
+              className="mb-8 grid grid-cols-2 gap-x-6 gap-y-3 w-full max-w-sm animate-fade-in-up"
+              style={{ animationDelay: "500ms" }}
+            >
+              {["Painless procedures", "Quick recovery", "Affordable care", "Latest technology"].map((f) => (
+                <div key={f} className="flex items-center gap-2.5 text-sm text-gray-700">
+                  <CheckCircle className="h-4 w-4 text-[#D41A2B] flex-shrink-0" />
+                  {f}
                 </div>
               ))}
             </div>
 
             {/* CTA buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto mb-8 sm:mb-12 animate-fade-in-up" style={{ animationDelay: "0.7s" }}>
-              <Button 
-                size="lg" 
-                className="bg-[#F22233] text-white hover:bg-[#d91e2c] shadow-xl shadow-[#F22233]/25 px-6 sm:px-8 text-sm sm:text-base h-12 sm:h-14 w-full sm:w-auto btn-shine transition-all duration-300 hover:scale-105"
+            <div
+              className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto mb-10 animate-fade-in-up"
+              style={{ animationDelay: "600ms" }}
+            >
+              <Button
+                size="lg"
+                className="relative overflow-hidden bg-[#D41A2B] text-white hover:bg-[#B8151F] shadow-xl shadow-[#D41A2B]/25 px-8 h-13 sm:h-14 text-sm sm:text-base w-full sm:w-auto transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-[#D41A2B]/35 btn-shine"
                 asChild
               >
                 <Link href="#contact">
-                  Book Appointment
-                  <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                  Book appointment
+                  <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-[#3B2E8C] text-[#3B2E8C] hover:bg-[#3B2E8C] hover:text-white h-12 sm:h-14 px-6 sm:px-8 text-sm sm:text-base w-full sm:w-auto transition-all duration-300 hover:scale-105"
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-2 border-[#2B1E7A] text-[#2B1E7A] hover:bg-[#2B1E7A] hover:text-white h-13 sm:h-14 px-8 text-sm sm:text-base w-full sm:w-auto transition-all duration-300 hover:scale-105"
                 asChild
               >
                 <a href="tel:+911234567890">
-                  <Phone className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                  Call Now
+                  <Phone className="mr-2 h-4 w-4" />
+                  Call now
                 </a>
               </Button>
             </div>
 
-            {/* Stats row */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-6 sm:gap-8 lg:gap-10 border-t border-gray-200 pt-6 sm:pt-8 w-full animate-fade-in-up" style={{ animationDelay: "0.8s" }}>
+            {/* Stats */}
+            <div
+              className="flex flex-wrap justify-center lg:justify-start gap-8 lg:gap-10 border-t border-gray-200/80 pt-8 w-full animate-fade-in-up"
+              style={{ animationDelay: "700ms" }}
+            >
               {[
-                { value: 25, suffix: "+", label: "Years Experience" },
-                { value: 50000, suffix: "+", label: "Happy Patients" },
+                { value: 25, suffix: "+", label: "Years experience" },
+                { value: 50000, suffix: "+", label: "Happy patients" },
                 { value: 15, suffix: "+", label: "Treatments" },
-              ].map((stat) => (
-                <div key={stat.label} className="text-center lg:text-left">
-                  <div className="text-2xl sm:text-3xl md:text-4xl font-bold text-[#3B2E8C]">
-                    <AnimatedCounter end={stat.value} suffix={stat.suffix} />
+              ].map((s) => (
+                <div key={s.label} className="text-center lg:text-left">
+                  <div
+                    className="text-3xl sm:text-4xl font-bold text-[#2B1E7A] leading-none"
+                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
+                  >
+                    <AnimatedCounter end={s.value} suffix={s.suffix} />
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-500 font-medium">{stat.label}</div>
+                  <div className="text-xs text-gray-400 font-medium mt-1.5">{s.label}</div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Visual - Eye Illustration */}
-          <div className="relative order-first lg:order-last">
-            <div className="relative mx-auto aspect-square max-w-[280px] sm:max-w-sm md:max-w-md lg:max-w-lg">
-              {/* Animated rings */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="absolute h-full w-full rounded-full border-2 border-dashed border-[#3B2E8C]/20 animate-[spin_30s_linear_infinite]" />
-                <div className="absolute h-[85%] w-[85%] rounded-full border-2 border-dashed border-[#F22233]/15 animate-[spin_25s_linear_infinite_reverse]" />
-                <div className="absolute h-[70%] w-[70%] rounded-full border border-[#1F5AA6]/10 animate-[spin_20s_linear_infinite]" />
-              </div>
+          {/* ── RIGHT: Eye illustration ── */}
+          <div className="relative order-first lg:order-last flex items-center justify-center">
+            <div className="relative mx-auto w-[280px] sm:w-[340px] md:w-[380px] lg:w-[400px] aspect-square flex items-center justify-center">
+
+              {/* Spinning rings */}
+              <div className="absolute inset-0 rounded-full border-[1.5px] border-dashed border-[#2B1E7A]/18 animate-[spin_30s_linear_infinite]" />
+              <div className="absolute inset-4 rounded-full border border-dashed border-[#D41A2B]/12 animate-[spin_22s_linear_infinite_reverse]" />
+              <div className="absolute inset-8 rounded-full border-[0.5px] border-dashed border-[#1F5AA6]/10 animate-[spin_16s_linear_infinite]" />
 
               {/* Eye SVG */}
-              <div className="absolute inset-0 flex items-center justify-center p-8 sm:p-12 md:p-16">
-                <svg viewBox="0 0 200 120" className="w-full drop-shadow-2xl animate-float">
-                  {/* Eye outline */}
-                  <ellipse cx="100" cy="60" rx="95" ry="55" fill="white" stroke="#3B2E8C" strokeWidth="3"/>
-                  
-                  {/* Gradients */}
+              <div className="absolute inset-0 flex items-center justify-center p-10 sm:p-14 md:p-16">
+                <svg
+                  viewBox="0 0 300 200"
+                  className="w-full drop-shadow-2xl animate-[float_4s_ease-in-out_infinite]"
+                  style={{ filter: "drop-shadow(0 12px 32px rgba(43,30,122,0.22))" }}
+                >
                   <defs>
-                    <radialGradient id="irisGradient" cx="40%" cy="40%" r="60%">
+                    <radialGradient id="irisGradient" cx="38%" cy="38%" r="62%">
                       <stop offset="0%" stopColor="#1F5AA6" />
-                      <stop offset="50%" stopColor="#3B2E8C" />
-                      <stop offset="100%" stopColor="#2a2066" />
+                      <stop offset="55%" stopColor="#2B1E7A" />
+                      <stop offset="100%" stopColor="#1a1255" />
                     </radialGradient>
-                    <radialGradient id="pupilGradient" cx="30%" cy="30%" r="60%">
-                      <stop offset="0%" stopColor="#333" />
-                      <stop offset="100%" stopColor="#0D0D0D" />
+                    <radialGradient id="pupilGradient" cx="32%" cy="32%" r="68%">
+                      <stop offset="0%" stopColor="#2a2a2a" />
+                      <stop offset="100%" stopColor="#050505" />
                     </radialGradient>
-                    <filter id="glow">
-                      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                      <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                      </feMerge>
-                    </filter>
+                    <clipPath id="eyeClip">
+                      <ellipse cx="150" cy="100" rx="142" ry="82" />
+                    </clipPath>
                   </defs>
-                  
-                  {/* Outer iris ring - gold */}
-                  <circle cx="100" cy="60" r="42" fill="none" stroke="#F2B035" strokeWidth="4" filter="url(#glow)"/>
-                  
-                  {/* Iris */}
-                  <circle cx="100" cy="60" r="38" fill="url(#irisGradient)"/>
-                  
-                  {/* Iris pattern */}
-                  {[...Array(12)].map((_, i) => (
-                    <line key={i} x1="100" y1="22" x2="100" y2="35" stroke="rgba(255,255,255,0.1)" strokeWidth="1" transform={`rotate(${i * 30} 100 60)`} />
-                  ))}
-                  
-                  {/* Pupil */}
-                  <circle cx="100" cy="60" r="16" fill="url(#pupilGradient)" className="animate-blink origin-center" style={{ transformBox: "fill-box" }}/>
-                  
-                  {/* Highlights */}
-                  <circle cx="88" cy="48" r="8" fill="white" opacity="0.9"/>
-                  <circle cx="112" cy="70" r="4" fill="white" opacity="0.5"/>
-                  
-                  {/* Red accent curves */}
-                  <path d="M5 60 Q25 55 40 48" fill="none" stroke="#F22233" strokeWidth="3" strokeLinecap="round"/>
-                  <path d="M195 60 Q175 55 160 48" fill="none" stroke="#F22233" strokeWidth="3" strokeLinecap="round"/>
+                  <ellipse cx="150" cy="100" rx="142" ry="82" fill="white" stroke="#2B1E7A" strokeWidth="2.5" />
+                  <g clipPath="url(#eyeClip)">
+                    <circle cx="150" cy="100" r="63" fill="#D4900A" opacity={0.9} />
+                    <circle cx="150" cy="100" r="58" fill="url(#irisGradient)" />
+                    {[...Array(12)].map((_, i) => (
+                      <line
+                        key={i}
+                        x1="150" y1="42" x2="150" y2="58"
+                        stroke="rgba(255,255,255,0.1)" strokeWidth="1.5"
+                        transform={`rotate(${i * 30} 150 100)`}
+                      />
+                    ))}
+                    <circle
+                      cx="150" cy="100" r="24"
+                      fill="url(#pupilGradient)"
+                      className="animate-blink origin-center"
+                      style={{ transformBox: "fill-box" }}
+                    />
+                    <circle cx="134" cy="83" r="11" fill="white" opacity={0.92} />
+                    <circle cx="162" cy="112" r="5" fill="white" opacity={0.5} />
+                  </g>
+                  <path d="M8 100 Q30 92 55 78" fill="none" stroke="#D41A2B" strokeWidth="3" strokeLinecap="round" />
+                  <path d="M292 100 Q270 92 245 78" fill="none" stroke="#D41A2B" strokeWidth="3" strokeLinecap="round" />
                 </svg>
               </div>
 
-              {/* Floating quick action buttons - Hidden on mobile, shown on larger screens */}
-              <div className="hidden sm:flex absolute -left-2 sm:-left-4 top-1/4 flex-col gap-2 sm:gap-3">
-                <a
-                  href="#contact"
-                  className="flex h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 items-center justify-center rounded-xl sm:rounded-2xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 group hover:scale-110"
-                >
-                  <Calendar className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6 text-[#3B2E8C] group-hover:text-[#F22233] transition-colors" />
-                </a>
-                <a
-                  href="https://wa.me/911234567890"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 items-center justify-center rounded-xl sm:rounded-2xl bg-green-500 shadow-lg hover:shadow-xl transition-all duration-300 text-white hover:bg-green-600 hover:scale-110"
-                >
-                  <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-                </a>
-                <a
-                  href="#contact"
-                  className="flex h-10 w-10 sm:h-12 sm:w-12 lg:h-14 lg:w-14 items-center justify-center rounded-xl sm:rounded-2xl bg-[#F22233] shadow-lg hover:shadow-xl transition-all duration-300 text-white hover:bg-[#d91e2c] hover:scale-110"
-                >
-                  <MapPin className="h-4 w-4 sm:h-5 sm:w-5 lg:h-6 lg:w-6" />
-                </a>
+              {/* Side quick-action buttons */}
+              <div className="hidden sm:flex absolute -left-4 lg:-left-6 top-1/2 -translate-y-1/2 flex-col gap-3">
+                {[
+                  { href: "#contact", bg: "bg-[#EEEDFE]", icon: <Calendar className="h-5 w-5 text-[#3C3489]" /> },
+                  { href: "https://wa.me/911234567890", bg: "bg-green-100", icon: <MessageCircle className="h-5 w-5 text-green-700" /> },
+                  { href: "#contact", bg: "bg-[#FCEBEB]", icon: <MapPin className="h-5 w-5 text-[#791F1F]" /> },
+                ].map((a, i) => (
+                  <a
+                    key={i}
+                    href={a.href}
+                    target={a.href.startsWith("https") ? "_blank" : undefined}
+                    rel={a.href.startsWith("https") ? "noopener noreferrer" : undefined}
+                    className={`flex h-11 w-11 sm:h-13 sm:w-13 items-center justify-center rounded-2xl ${a.bg} transition-all duration-200 hover:scale-110 hover:shadow-md`}
+                  >
+                    {a.icon}
+                  </a>
+                ))}
               </div>
 
-              {/* Info card - Responsive positioning */}
-              <div className="absolute -right-2 sm:-right-4 bottom-1/4 sm:bottom-1/3 rounded-xl sm:rounded-2xl bg-white p-3 sm:p-4 shadow-xl border border-gray-100 animate-float-delayed">
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="h-8 w-8 sm:h-10 sm:w-10 rounded-full bg-gradient-to-br from-[#3B2E8C] to-[#1F5AA6] flex items-center justify-center text-white text-xs sm:text-sm font-bold">
-                    500+
-                  </div>
-                  <div>
-                    <div className="text-xs sm:text-sm font-semibold text-gray-900">Reviews</div>
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="h-2.5 w-2.5 sm:h-3 sm:w-3 fill-[#F2B035] text-[#F2B035]" />
-                      ))}
-                    </div>
-                  </div>
+              {/* Floating info cards */}
+              <div className="absolute -right-2 sm:-right-6 top-6 sm:top-10 rounded-2xl bg-white border border-gray-100 p-3 sm:p-4 shadow-xl animate-[float-delayed_3.5s_ease-in-out_infinite]">
+                <div className="text-[10px] text-gray-400 mb-1">Patient reviews</div>
+                <div className="text-sm font-semibold text-gray-800">500+ reviews</div>
+                <div className="flex items-center gap-0.5 mt-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="h-2.5 w-2.5 fill-[#E8A020] text-[#E8A020]" />
+                  ))}
                 </div>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
-      {/* Mobile quick actions - Fixed at bottom on mobile */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-white border-t border-gray-200 p-3 flex justify-around items-center gap-2 shadow-[0_-4px_20px_rgba(0,0,0,0.1)]">
-        <a href="tel:+911234567890" className="flex flex-col items-center gap-1 text-[#3B2E8C]">
-          <div className="h-10 w-10 rounded-full bg-[#3B2E8C]/10 flex items-center justify-center">
-            <Phone className="h-5 w-5" />
-          </div>
-          <span className="text-[10px] font-medium">Call</span>
-        </a>
-        <a href="https://wa.me/911234567890" target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-1 text-green-600">
-          <div className="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
-            <MessageCircle className="h-5 w-5" />
-          </div>
-          <span className="text-[10px] font-medium">WhatsApp</span>
-        </a>
-        <Link href="#contact" className="flex flex-col items-center gap-1 text-[#F22233]">
-          <div className="h-10 w-10 rounded-full bg-[#F22233]/10 flex items-center justify-center">
-            <Calendar className="h-5 w-5" />
-          </div>
-          <span className="text-[10px] font-medium">Book</span>
-        </Link>
-        <a href="#contact" className="flex flex-col items-center gap-1 text-[#3B2E8C]">
-          <div className="h-10 w-10 rounded-full bg-[#3B2E8C]/10 flex items-center justify-center">
-            <MapPin className="h-5 w-5" />
-          </div>
-          <span className="text-[10px] font-medium">Location</span>
-        </a>
+      {/* ── Mobile sticky bottom bar ── */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden bg-white/95 backdrop-blur border-t border-gray-200 px-2 py-2 grid grid-cols-4 gap-1 shadow-[0_-4px_24px_rgba(0,0,0,0.08)]">
+        {[
+          { href: "tel:+911234567890", bg: "bg-[#EEEDFE]", icon: <Phone className="h-5 w-5 text-[#3C3489]" />, label: "Call" },
+          { href: "https://wa.me/911234567890", bg: "bg-green-100", icon: <MessageCircle className="h-5 w-5 text-green-700" />, label: "WhatsApp" },
+          { href: "#contact", bg: "bg-[#FCEBEB]", icon: <Calendar className="h-5 w-5 text-[#791F1F]" />, label: "Book" },
+          { href: "#contact", bg: "bg-[#EEEDFE]", icon: <MapPin className="h-5 w-5 text-[#3C3489]" />, label: "Location" },
+        ].map((a) => (
+          <a
+            key={a.label}
+            href={a.href}
+            target={a.href.startsWith("https") ? "_blank" : undefined}
+            rel={a.href.startsWith("https") ? "noopener noreferrer" : undefined}
+            className="flex flex-col items-center gap-1.5 py-1.5 rounded-xl"
+          >
+            <div className={`h-10 w-10 rounded-full ${a.bg} flex items-center justify-center`}>
+              {a.icon}
+            </div>
+            <span className="text-[10px] text-gray-500 font-medium">{a.label}</span>
+          </a>
+        ))}
       </div>
+
     </section>
   )
 }
