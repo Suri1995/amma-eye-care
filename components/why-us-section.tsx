@@ -57,7 +57,7 @@ const features = [
 
 export function WhyUsSection() {
   return (
-    <section id="why-us" className="relative bg-gradient-to-b from-gray-50 to-white py-16 sm:py-20 md:py-28 overflow-hidden">
+    <section id="why-us" className="relative bg-gradient-to-b from-gray-50 to-white py-7 md:py-20 overflow-hidden">
       {/* Background decoration */}
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#F22233]/20 to-transparent" />
       <div className="absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-[#3B2E8C]/5 blur-3xl" />

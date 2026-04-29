@@ -1,147 +1,552 @@
 "use client"
 
-import { Award, Star, Users, GraduationCap, CheckCircle } from "lucide-react"
+import { useState, useRef } from "react"
+import {
+  Award,
+  Star,
+  Users,
+  GraduationCap,
+  CheckCircle,
+  CalendarCheck,
+  MapPin,
+  ChevronRight,
+  ChevronLeft,
+} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 
-const specializations = [
-  "Phaco Surgery Expert",
-  "Laser Vision Correction", 
-  "Pediatric Ophthalmology",
-  "Cornea & Refractive Surgery",
-  "Glaucoma Management",
-  "Retinal Diseases"
+type Doctor = {
+  id: string
+  initials: string
+  panelFrom: string
+  panelVia: string
+  panelTo: string
+  name: string
+  role: string
+  credentials: string
+  education: string
+  experience: string
+  stats: { value: string; label: string; hasStar?: boolean }[]
+  specializations: string[]
+}
+
+type Branch = {
+  id: string
+  name: string
+  address: string
+  doctors: Doctor[]
+}
+
+const branches: Branch[] = [
+  {
+    id: "lb-nagar",
+    name: "LB Nagar Branch",
+    address: "Chintalkunta, Hyderabad",
+    doctors: [
+      {
+        id: "d1",
+        initials: "AL",
+        panelFrom: "#F2B035",
+        panelVia: "#F28035",
+        panelTo: "#F22233",
+        name: "Dr. Amma Lakshmi",
+        role: "Chief Eye Surgeon & Founder",
+        credentials: "MS, DNB (Ophthalmology), FICO (London)",
+        education: "MS Ophthalmology (AIIMS), DNB, FICO Fellow (London)",
+        experience: "25+ years of excellence in comprehensive eye care",
+        stats: [
+          { value: "25+", label: "Years Exp." },
+          { value: "50K+", label: "Patients" },
+          // { value: "4.9", label: "Rating", hasStar: true },
+        ],
+        specializations: [
+          "Phaco Surgery Expert",
+          "Laser Vision Correction",
+          "Pediatric Ophthalmology",
+          "Cornea & Refractive Surgery",
+          "Glaucoma Management",
+          "Retinal Diseases",
+        ],
+      },
+      {
+        id: "d2",
+        initials: "RK",
+        panelFrom: "#3B2E8C",
+        panelVia: "#2e257a",
+        panelTo: "#1F5AA6",
+        name: "Dr. Ravi Kumar",
+        role: "Senior Ophthalmologist",
+        credentials: "MS Ophthalmology, FRCS (Edinburgh)",
+        education: "MS Ophthalmology (JIPMER), FRCS (Edinburgh)",
+        experience: "18 years specialising in retinal disorders",
+        stats: [
+          { value: "18+", label: "Years Exp." },
+          { value: "30K+", label: "Patients" },
+          // { value: "4.8", label: "Rating", hasStar: true },
+        ],
+        specializations: [
+          "Retinal Diseases",
+          "Vitreoretinal Surgery",
+          "Diabetic Retinopathy",
+          "Macular Degeneration",
+          "Uveitis Management",
+        ],
+      },
+    ],
+  },
+  {
+    id: "kokapet",
+    name: "Kokapet Branch",
+    address: "Kokapet Terminal, Hyderabad",
+    doctors: [
+      {
+        id: "d3",
+        initials: "SP",
+        panelFrom: "#085041",
+        panelVia: "#0F6E56",
+        panelTo: "#1D9E75",
+        name: "Dr. Sunita Prasad",
+        role: "Lead Surgeon & Branch Head",
+        credentials: "MS Ophthalmology, DNB, FMRF",
+        education: "MS Ophthalmology (Osmania), DNB, FMRF (Singapore)",
+        experience: "20 years in LASIK & corneal surgeries",
+        stats: [
+          { value: "20+", label: "Years Exp." },
+          { value: "40K+", label: "Patients" },
+          // { value: "4.9", label: "Rating", hasStar: true },
+        ],
+        specializations: [
+          "LASIK & SMILE Surgery",
+          "Cornea Transplant",
+          "Dry Eye Treatment",
+          "Cataract Surgery",
+          "Keratoconus Management",
+        ],
+      },
+      {
+        id: "d4",
+        initials: "MR",
+        panelFrom: "#72243E",
+        panelVia: "#993556",
+        panelTo: "#D4537E",
+        name: "Dr. Meera Reddy",
+        role: "Paediatric Eye Specialist",
+        credentials: "MS Ophthalmology, Fellowship Paed. Ophthalmology",
+        education: "MS Ophthalmology (AIIMS), Fellowship (LV Prasad)",
+        experience: "12 years in paediatric & squint surgery",
+        stats: [
+          { value: "12+", label: "Years Exp." },
+          { value: "20K+", label: "Patients" },
+          // { value: "4.9", label: "Rating", hasStar: true },
+        ],
+        specializations: [
+          "Pediatric Ophthalmology",
+          "Squint Surgery",
+          "Amblyopia Treatment",
+          "ROP Screening",
+          "Congenital Cataract",
+        ],
+      },
+    ],
+  },
 ]
 
-export function DoctorsSection() {
+// ─── Doctor Card ──────────────────────────────────────────────────────────────
+
+function DoctorCard({ doctor }: { doctor: Doctor }) {
   return (
-    <section id="doctor" className="bg-gradient-to-b from-gray-50 to-white py-16 sm:py-20 md:py-28 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4">
-        {/* Section header */}
-        <div className="mx-auto mb-10 sm:mb-16 max-w-2xl text-center">
-          <span className="inline-block mb-3 sm:mb-4 px-4 py-1.5 rounded-full bg-[#3B2E8C]/10 text-[#3B2E8C] text-xs sm:text-sm font-semibold">
-            Meet The Expert
+    <article
+      className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-gray-100 hover:shadow-lg hover:ring-gray-200 transition-all duration-300 h-full"
+      aria-label={`${doctor.name}, ${doctor.role}`}
+    >
+      {/* ── Coloured top panel: image + name only ── */}
+      <div
+        className="relative flex flex-col items-center px-6 pt-8 pb-6 overflow-hidden"
+        style={{
+          background: `linear-gradient(135deg, ${doctor.panelFrom}, ${doctor.panelVia}, ${doctor.panelTo})`,
+        }}
+      >
+        {/* Dot texture */}
+        <div
+          className="pointer-events-none absolute inset-0 opacity-[0.07]"
+          aria-hidden="true"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px)",
+            backgroundSize: "18px 18px",
+          }}
+        />
+
+        {/* Avatar */}
+        <div className="relative z-10 mb-4">
+          <div className="h-24 w-24 rounded-full overflow-hidden ring-4 ring-white/30 shadow-xl">
+            {/*
+              Replace with real photo:
+              <Image
+                src="/images/doctors/doctor-id.jpg"
+                alt={doctor.name}
+                fill
+                sizes="96px"
+                className="object-cover object-top"
+                priority
+              />
+            */}
+            <div
+              className="w-full h-full flex items-center justify-center"
+              style={{
+                background: `linear-gradient(135deg, ${doctor.panelFrom}, ${doctor.panelTo})`,
+              }}
+              role="img"
+              aria-label={`${doctor.name} avatar`}
+            >
+              <span className="text-3xl font-bold text-white select-none">
+                {doctor.initials}
+              </span>
+            </div>
+          </div>
+          {/* Verified badge */}
+          <div
+            className="absolute -bottom-1 -right-1 z-20 flex h-7 w-7 items-center justify-center rounded-full bg-white shadow-md ring-2 ring-black/5"
+            aria-label="Verified doctor"
+          >
+            <CheckCircle className="h-4 w-4 text-[#3B2E8C]" aria-hidden="true" />
+          </div>
+        </div>
+
+        {/* Name only */}
+        <div className="relative z-10 text-center">
+          <p className="text-base font-bold text-white leading-tight">{doctor.name}</p>
+        </div>
+      </div>
+
+      {/* ── Info panel ── */}
+      <div className="flex flex-col flex-1 p-5">
+        {/* Role badge */}
+        <span className="mb-3 inline-flex w-fit items-center gap-1.5 rounded-full bg-[#F22233]/10 px-3 py-1 text-[11px] font-semibold text-[#F22233] border border-[#F22233]/15">
+          <span className="h-1.5 w-1.5 rounded-full bg-[#F22233]" aria-hidden="true" />
+          {doctor.role}
+        </span>
+
+        <p className="text-xs font-semibold text-[#3B2E8C] mb-3">{doctor.credentials}</p>
+
+        {/* Stats row */}
+        <div
+          className="mb-4 grid grid-cols-3 gap-2"
+          role="list"
+          aria-label={`${doctor.name} statistics`}
+        >
+          {doctor.stats.map((stat) => (
+            <div
+              key={stat.label}
+              role="listitem"
+              className="rounded-xl bg-gray-50 border border-gray-100 px-2 py-2.5 text-center"
+            >
+              <div className="flex items-center justify-center gap-0.5 text-sm font-bold text-gray-900 leading-none">
+                {stat.value}
+                {stat.hasStar && (
+                  <Star className="h-3 w-3 fill-[#F2B035] text-[#F2B035]" aria-hidden="true" />
+                )}
+              </div>
+              <p className="mt-1 text-[10px] text-gray-500 font-medium">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Qualifications */}
+        <div className="space-y-2 mb-4" role="list" aria-label="Qualifications">
+          {[
+            {
+              Icon: GraduationCap,
+              bg: "bg-[#3B2E8C]/10",
+              color: "text-[#3B2E8C]",
+              title: "Education",
+              detail: doctor.education,
+            },
+            {
+              Icon: Award,
+              bg: "bg-[#F22233]/10",
+              color: "text-[#F22233]",
+              title: "Experience",
+              detail: doctor.experience,
+            },
+          ].map((q) => (
+            <div
+              key={q.title}
+              role="listitem"
+              className="flex items-start gap-2.5 rounded-xl bg-gray-50 border border-gray-100 px-3 py-2.5 hover:border-gray-200 transition-colors group"
+            >
+              <div
+                className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg ${q.bg} group-hover:scale-105 transition-transform mt-0.5`}
+                aria-hidden="true"
+              >
+                <q.Icon className={`h-3.5 w-3.5 ${q.color}`} />
+              </div>
+              <div>
+                <p className="text-xs font-semibold text-gray-900 leading-snug">{q.title}</p>
+                <p className="text-[11px] text-gray-500 leading-snug mt-0.5">{q.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Specializations */}
+        <div className="mb-5">
+          <div className="flex items-center gap-1.5 mb-2">
+            <Users className="h-3.5 w-3.5 text-[#3B2E8C]" aria-hidden="true" />
+            <span className="text-xs font-semibold text-gray-900">Specializations</span>
+          </div>
+          <ul className="flex flex-wrap gap-1.5" aria-label={`${doctor.name} specializations`}>
+            {doctor.specializations.map((skill) => (
+              <li key={skill}>
+                <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 text-[11px] font-medium text-gray-700 hover:bg-[#3B2E8C]/10 hover:text-[#3B2E8C] transition-colors border border-transparent hover:border-[#3B2E8C]/15 cursor-default">
+                  <CheckCircle className="h-3 w-3 text-[#F22233] flex-shrink-0" aria-hidden="true" />
+                  {skill}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* CTA */}
+        <div className="mt-auto">
+          <Button
+            className="w-full bg-[#F22233] text-white hover:bg-[#d91e2c] active:scale-[0.97] shadow-md shadow-[#F22233]/20 hover:shadow-lg hover:shadow-[#F22233]/25 h-10 text-sm font-semibold rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F22233] focus-visible:ring-offset-2"
+            asChild
+          >
+            <Link href="#contact" aria-label={`Book consultation with ${doctor.name}`}>
+              <CalendarCheck className="mr-2 h-4 w-4" aria-hidden="true" />
+              Book Consultation
+            </Link>
+          </Button>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+// ─── Mobile Carousel ──────────────────────────────────────────────────────────
+
+function MobileCarousel({ doctors }: { doctors: Doctor[] }) {
+  const [activeIndex, setActiveIndex] = useState(0)
+  const touchStartX = useRef<number>(0)
+  const touchEndX = useRef<number>(0)
+
+  const prev = () => setActiveIndex((i) => Math.max(0, i - 1))
+  const next = () => setActiveIndex((i) => Math.min(doctors.length - 1, i + 1))
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+  const onTouchEnd = (e: React.TouchEvent) => {
+    touchEndX.current = e.changedTouches[0].clientX
+    const delta = touchStartX.current - touchEndX.current
+    if (delta > 40) next()
+    else if (delta < -40) prev()
+  }
+
+  return (
+    <div
+      className="relative"
+      role="region"
+      aria-label="Doctors carousel"
+      aria-roledescription="carousel"
+    >
+      <div
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        className="overflow-hidden"
+      >
+        <div
+          className="flex transition-transform duration-300 ease-in-out will-change-transform"
+          style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+          aria-live="polite"
+        >
+          {doctors.map((doctor, i) => (
+            <div
+              key={doctor.id}
+              className="w-full flex-shrink-0"
+              role="group"
+              aria-roledescription="slide"
+              aria-label={`${i + 1} of ${doctors.length}: ${doctor.name}`}
+              aria-hidden={i !== activeIndex}
+            >
+              <DoctorCard doctor={doctor} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {doctors.length > 1 && (
+        <>
+          <div className="mt-5 flex items-center justify-center gap-4">
+            <button
+              onClick={prev}
+              disabled={activeIndex === 0}
+              aria-label="Previous doctor"
+              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-gray-200 bg-white text-gray-500 transition-all hover:border-[#3B2E8C] hover:text-[#3B2E8C] disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B2E8C] focus-visible:ring-offset-2"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+
+            <div className="flex items-center gap-2" role="tablist" aria-label="Select doctor slide">
+              {doctors.map((_, i) => (
+                <button
+                  key={i}
+                  role="tab"
+                  aria-selected={i === activeIndex}
+                  aria-label={`Go to slide ${i + 1}`}
+                  onClick={() => setActiveIndex(i)}
+                  className={`rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B2E8C] focus-visible:ring-offset-2 ${
+                    i === activeIndex
+                      ? "w-6 h-2.5 bg-[#3B2E8C]"
+                      : "w-2.5 h-2.5 bg-gray-300 hover:bg-gray-400"
+                  }`}
+                />
+              ))}
+            </div>
+
+            <button
+              onClick={next}
+              disabled={activeIndex === doctors.length - 1}
+              aria-label="Next doctor"
+              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-gray-200 bg-white text-gray-500 transition-all hover:border-[#3B2E8C] hover:text-[#3B2E8C] disabled:opacity-30 disabled:cursor-not-allowed focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B2E8C] focus-visible:ring-offset-2"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
+
+          <p className="mt-2 text-center text-[11px] text-gray-400 select-none" aria-hidden="true">
+            Swipe to see more doctors
+          </p>
+        </>
+      )}
+    </div>
+  )
+}
+
+// ─── Section ──────────────────────────────────────────────────────────────────
+
+export function DoctorsSection() {
+  const [activeBranchId, setActiveBranchId] = useState(branches[0].id)
+  const activeBranch = branches.find((b) => b.id === activeBranchId) ?? branches[0]
+
+  return (
+    <section
+      id="doctor"
+      className="relative bg-gradient-to-b from-gray-50 to-white py-10 sm:py-14 md:py-20 overflow-hidden"
+      aria-labelledby="doctor-heading"
+    >
+      {/* Bg orbs */}
+      <div className="pointer-events-none absolute -top-20 -right-20 h-64 w-64 rounded-full bg-[#3B2E8C]/5 blur-3xl" aria-hidden="true" />
+      <div className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-[#F22233]/5 blur-3xl" aria-hidden="true" />
+
+      <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
+        <div className="mx-auto mb-8 sm:mb-10 max-w-xl text-center">
+          <span className="inline-flex items-center gap-1.5 mb-3 px-3.5 py-1 rounded-full bg-[#3B2E8C]/10 text-[#3B2E8C] text-xs font-semibold border border-[#3B2E8C]/15">
+            <span className="h-1.5 w-1.5 rounded-full bg-[#3B2E8C] animate-pulse" aria-hidden="true" />
+            Meet The Experts
           </span>
-          <h2 className="mb-3 sm:mb-4 text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
-            Your <span className="text-[#F22233]">Doctor</span>
+          <h2
+            id="doctor-heading"
+            className="mb-2 text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-gray-900"
+          >
+            Our <span className="text-[#F22233]">Doctors</span>
           </h2>
-          <p className="text-sm sm:text-lg text-gray-600">
-            Meet the experienced specialist behind your perfect vision journey.
+          <p className="text-xs sm:text-sm text-gray-500 leading-relaxed">
+            Experienced specialists across both our branches, dedicated to your perfect vision.
           </p>
         </div>
 
-        {/* Doctor card */}
-        <div className="mx-auto max-w-5xl">
-          <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-white shadow-2xl">
-            {/* Decorative elements */}
-            <div className="absolute -right-20 -top-20 h-40 w-40 rounded-full bg-[#F22233]/5 blur-3xl" />
-            <div className="absolute -left-20 -bottom-20 h-40 w-40 rounded-full bg-[#3B2E8C]/5 blur-3xl" />
-            
-            <div className="grid md:grid-cols-5">
-              {/* Image side */}
-              <div className="relative md:col-span-2 bg-gradient-to-br from-[#3B2E8C] via-[#3B2E8C] to-[#1F5AA6] p-6 sm:p-8 md:p-10 lg:p-12">
-                <div className="relative aspect-square max-w-[200px] sm:max-w-[250px] md:max-w-full mx-auto">
-                  {/* Decorative rings */}
-                  <div className="absolute inset-0 rounded-full border-2 border-white/10 animate-[spin_20s_linear_infinite]" />
-                  <div className="absolute inset-3 sm:inset-4 rounded-full border-2 border-white/20 animate-[spin_15s_linear_infinite_reverse]" />
-                  <div className="absolute inset-6 sm:inset-8 rounded-full border-2 border-white/30" />
-                  
-                  {/* Doctor avatar */}
-                  <div className="absolute inset-8 sm:inset-10 md:inset-12 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm flex items-center justify-center overflow-hidden">
-                    <div className="h-24 w-24 sm:h-28 sm:w-28 md:h-32 md:w-32 rounded-full bg-gradient-to-br from-[#F2B035] to-[#F22233] flex items-center justify-center text-3xl sm:text-4xl md:text-5xl font-bold text-white shadow-2xl">
-                      DA
-                    </div>
-                  </div>
-                </div>
-
-                {/* Stats overlay - Mobile: horizontal, Desktop: bottom */}
-                <div className="flex justify-center gap-3 mt-6 md:absolute md:bottom-6 md:left-6 md:right-6 md:mt-0">
-                  {[
-                    { value: "25+", label: "Years" },
-                    { value: "50K+", label: "Patients" },
-                    { value: "4.9", label: "Rating", hasStar: true },
-                  ].map((stat) => (
-                    <div key={stat.label} className="rounded-lg sm:rounded-xl bg-white/15 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-3 text-center flex-1 md:flex-none">
-                      <div className="flex items-center justify-center gap-1 text-lg sm:text-xl md:text-2xl font-bold text-white">
-                        {stat.value}
-                        {stat.hasStar && <Star className="h-3 w-3 sm:h-4 sm:w-4 fill-[#F2B035] text-[#F2B035]" />}
-                      </div>
-                      <div className="text-[10px] sm:text-xs text-white/80">{stat.label}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Info side */}
-              <div className="md:col-span-3 p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-center">
-                <div className="mb-4">
-                  <span className="inline-block rounded-full bg-[#F22233]/10 px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm font-semibold text-[#F22233]">
-                    Chief Eye Surgeon & Founder
-                  </span>
-                </div>
-                
-                <h3 className="mb-2 text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">
-                  Dr. Amma Lakshmi
-                </h3>
-                <p className="mb-4 sm:mb-6 text-base sm:text-lg text-[#3B2E8C] font-medium">
-                  MS, DNB (Ophthalmology), FICO (London)
-                </p>
-
-                {/* Qualifications */}
-                <div className="mb-6 space-y-3 sm:space-y-4">
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-[#3B2E8C]/10">
-                      <GraduationCap className="h-4 w-4 sm:h-5 sm:w-5 text-[#3B2E8C]" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-gray-900 text-sm sm:text-base">Education</div>
-                      <div className="text-xs sm:text-sm text-gray-600">MS Ophthalmology (AIIMS), DNB, FICO Fellow (London)</div>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3 sm:gap-4">
-                    <div className="flex h-9 w-9 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-lg sm:rounded-xl bg-[#F22233]/10">
-                      <Award className="h-4 w-4 sm:h-5 sm:w-5 text-[#F22233]" />
-                    </div>
-                    <div>
-                      <div className="font-semibold text-gray-900 text-sm sm:text-base">Experience</div>
-                      <div className="text-xs sm:text-sm text-gray-600">25+ years of excellence in comprehensive eye care</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Specializations */}
-                <div className="mb-6">
-                  <div className="flex items-center gap-2 mb-3">
-                    <Users className="h-4 w-4 text-[#3B2E8C]" />
-                    <span className="font-semibold text-gray-900 text-sm sm:text-base">Specializations</span>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                    {specializations.map((skill) => (
-                      <span 
-                        key={skill}
-                        className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm font-medium text-gray-700 hover:bg-[#3B2E8C]/10 hover:text-[#3B2E8C] transition-colors"
-                      >
-                        <CheckCircle className="h-3 w-3 text-[#F22233]" />
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA */}
-                <Button 
-                  className="w-full sm:w-auto bg-[#F22233] text-white hover:bg-[#d91e2c] shadow-lg shadow-[#F22233]/20 h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base"
-                  asChild
+        {/* Branch Selector */}
+        <div
+          className="mb-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3"
+          role="tablist"
+          aria-label="Select hospital branch"
+        >
+          {branches.map((branch) => {
+            const isActive = branch.id === activeBranchId
+            return (
+              <button
+                key={branch.id}
+                role="tab"
+                aria-selected={isActive}
+                aria-controls={`panel-${branch.id}`}
+                id={`tab-${branch.id}`}
+                onClick={() => setActiveBranchId(branch.id)}
+                className={`group relative flex items-center gap-3 rounded-2xl px-5 py-3.5 text-left border-2 transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B2E8C] focus-visible:ring-offset-2 ${
+                  isActive
+                    ? "border-[#3B2E8C] bg-[#3B2E8C] text-white shadow-lg shadow-[#3B2E8C]/20"
+                    : "border-gray-200 bg-white text-gray-700 hover:border-[#3B2E8C]/40 hover:bg-[#3B2E8C]/5 hover:shadow-md"
+                }`}
+              >
+                <div
+                  className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl transition-colors ${
+                    isActive ? "bg-white/20" : "bg-[#3B2E8C]/10 group-hover:bg-[#3B2E8C]/20"
+                  }`}
+                  aria-hidden="true"
                 >
-                  <Link href="#contact">
-                    Book Consultation
-                    <Award className="ml-2 h-4 w-4" />
-                  </Link>
-                </Button>
-              </div>
-            </div>
+                  <MapPin className={`h-4 w-4 ${isActive ? "text-white" : "text-[#3B2E8C]"}`} />
+                </div>
+                <div className="min-w-0">
+                  <p className={`text-sm font-bold leading-tight ${isActive ? "text-white" : "text-gray-900"}`}>
+                    {branch.name}
+                  </p>
+                  <p className={`text-[11px] mt-0.5 ${isActive ? "text-white/70" : "text-gray-500"}`}>
+                    {branch.address}
+                  </p>
+                </div>
+                <ChevronRight
+                  className={`h-4 w-4 flex-shrink-0 ml-1 transition-all duration-200 ${
+                    isActive
+                      ? "text-white rotate-90"
+                      : "text-gray-400 group-hover:text-[#3B2E8C] group-hover:translate-x-0.5"
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
+            )
+          })}
+        </div>
+
+        {/* Branch info bar */}
+        <div
+          className="mb-6 flex items-center justify-between gap-3 rounded-xl bg-[#3B2E8C]/5 border border-[#3B2E8C]/10 px-4 py-2.5"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          <div className="flex items-center gap-2 min-w-0">
+            <MapPin className="h-3.5 w-3.5 text-[#3B2E8C] flex-shrink-0" aria-hidden="true" />
+            <span className="text-xs font-semibold text-[#3B2E8C] truncate">{activeBranch.name}</span>
+            <span className="text-xs text-gray-500 hidden sm:inline">— {activeBranch.address}</span>
+          </div>
+          <span className="flex-shrink-0 inline-flex items-center gap-1 rounded-full bg-[#3B2E8C]/10 px-2.5 py-1 text-[11px] font-semibold text-[#3B2E8C]">
+            <Users className="h-3 w-3" aria-hidden="true" />
+            {activeBranch.doctors.length} doctor{activeBranch.doctors.length > 1 ? "s" : ""}
+          </span>
+        </div>
+
+        {/* Cards */}
+        <div
+          id={`panel-${activeBranch.id}`}
+          role="tabpanel"
+          aria-labelledby={`tab-${activeBranch.id}`}
+        >
+          {/* Mobile: carousel */}
+          <div className="md:hidden">
+            <MobileCarousel doctors={activeBranch.doctors} />
+          </div>
+
+          {/* Desktop: 2-col grid */}
+          <div className="hidden md:grid md:grid-cols-2 gap-5 lg:gap-6">
+            {activeBranch.doctors.map((doctor) => (
+              <DoctorCard key={doctor.id} doctor={doctor} />
+            ))}
           </div>
         </div>
+
       </div>
     </section>
   )

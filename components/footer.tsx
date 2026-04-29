@@ -1,8 +1,9 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
-import { Eye, Phone, Mail, MapPin, Facebook, Instagram, Youtube, Twitter, ArrowUp, Heart, ChevronDown } from "lucide-react"
+import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Twitter, ArrowUp, Heart, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 const quickLinks = [
@@ -46,7 +47,7 @@ function FooterDropdown({ title, children }: FooterDropdownProps) {
         className="flex w-full items-center justify-between py-4 md:hidden"
         aria-expanded={isOpen}
       >
-        <h3 className="text-base font-bold text-white relative">
+        <h3 className="text-base font-bold text-primary relative">
           {title}
           <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-[#F22233]" />
         </h3>
@@ -63,7 +64,7 @@ function FooterDropdown({ title, children }: FooterDropdownProps) {
       </div>
 
       {/* Desktop Only */}
-      <h3 className="hidden md:inline-block mb-6 text-lg font-bold text-white relative">
+      <h3 className="hidden md:inline-block mb-6 text-lg font-bold text-primary relative">
         {title}
         <span className="absolute -bottom-1 left-0 w-8 h-0.5 bg-[#F22233]" />
       </h3>
@@ -80,7 +81,7 @@ export function Footer() {
   }
 
   return (
-    <footer className="bg-gradient-to-b from-[#0D0D0D] to-black text-white relative">
+    <footer className="bg-gray-300">
       {/* Scroll to top button */}
       <Button
         onClick={scrollToTop}
@@ -95,21 +96,16 @@ export function Footer() {
           {/* Brand column - always visible, no dropdown */}
           <div className="md:col-span-2 lg:col-span-1 pb-6 md:pb-0 border-b border-white/10 md:border-none">
             <Link href="#" className="mb-5 sm:mb-6 flex items-center gap-2 sm:gap-3 group inline-flex">
-              <div className="relative">
-                <div className="flex h-11 w-11 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-gradient-to-br from-[#3B2E8C] to-[#1F5AA6] shadow-lg group-hover:shadow-xl transition-shadow">
-                  <Eye className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                </div>
-                <div className="absolute -right-0.5 -top-0.5 h-3 w-3 rounded-full bg-[#F22233] border-2 border-[#0D0D0D]" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-lg sm:text-xl font-bold leading-tight">
-                  <span className="text-white">Amma</span>{" "}
-                  <span className="text-[#F22233]">Eye Care</span>
-                </span>
-                <span className="text-[10px] sm:text-xs font-semibold text-gray-400 tracking-[0.2em] uppercase">Hospital</span>
-              </div>
+              <Image
+                            src="/amma-eye-care-logo.png"
+                            alt="Amma Eye Care"
+                            width={200}
+                            height={50}
+                            priority
+                            className="h-10 w-auto object-contain transition-opacity duration-200 group-hover:opacity-85"
+                          />
             </Link>
-            <p className="mb-5 sm:mb-6 text-gray-400 text-sm leading-relaxed max-w-xs">
+            <p className="mb-5 sm:mb-6 text-gray-700 text-sm leading-relaxed max-w-xs">
               Providing exceptional eye care services since 1998. Your vision is our mission. 
               Experience world-class treatment with compassionate care.
             </p>
@@ -120,10 +116,10 @@ export function Footer() {
                 <a
                   key={social.label}
                   href={social.href}
-                  className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-white/5 transition-all duration-300 ${social.color} hover:scale-110`}
+                  className={`flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-white transition-all duration-300 ${social.color} hover:scale-110`}
                   aria-label={social.label}
                 >
-                  <social.icon className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <social.icon className="h-4 w-4 sm:h-5 sm:w-5" fill="#ffffff" />
                 </a>
               ))}
             </div>
@@ -136,9 +132,9 @@ export function Footer() {
                 <li key={link.name}>
                   <Link 
                     href={link.href}
-                    className="text-sm text-gray-400 transition-all duration-300 hover:text-white hover:translate-x-1 inline-flex items-center gap-2"
+                    className="text-sm text-secondary transition-all duration-300 hover:text-white hover:translate-x-1 inline-flex items-center gap-2"
                   >
-                    <span className="h-1 w-1 rounded-full bg-[#F22233]/50" />
+                    <span className="h-1 w-1 rounded-full bg-secondary" />
                     {link.name}
                   </Link>
                 </li>
@@ -153,9 +149,9 @@ export function Footer() {
                 <li key={service.name}>
                   <Link 
                     href={service.href}
-                    className="text-sm text-gray-400 transition-all duration-300 hover:text-white hover:translate-x-1 inline-flex items-center gap-2"
+                    className="text-sm text-secondary transition-all duration-300 hover:text-white hover:translate-x-1 inline-flex items-center gap-2"
                   >
-                    <span className="h-1 w-1 rounded-full bg-[#F22233]/50" />
+                    <span className="h-1 w-1 rounded-full bg-secondary" />
                     {service.name}
                   </Link>
                 </li>
@@ -170,7 +166,7 @@ export function Footer() {
                 <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10">
                   <MapPin className="h-4 w-4 text-[#F22233]" />
                 </div>
-                <span className="text-sm text-gray-400 leading-relaxed">
+                <span className="text-sm text-secondary leading-relaxed">
                   Amma Eye Care Hospital, Opp. General Hospital, Main Road, Medical District - 500001
                 </span>
               </li>
@@ -179,7 +175,7 @@ export function Footer() {
                   <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10 group-hover:bg-[#F22233] transition-colors">
                     <Phone className="h-4 w-4 text-[#F22233] group-hover:text-white transition-colors" />
                   </div>
-                  <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
+                  <span className="text-sm text-secondary group-hover:text-white transition-colors">
                     +91 1234 567 890
                   </span>
                 </a>
@@ -189,7 +185,7 @@ export function Footer() {
                   <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10 group-hover:bg-[#F22233] transition-colors">
                     <Mail className="h-4 w-4 text-[#F22233] group-hover:text-white transition-colors" />
                   </div>
-                  <span className="text-sm text-gray-400 group-hover:text-white transition-colors">
+                  <span className="text-sm text-secondary group-hover:text-white transition-colors">
                     info@ammaeyecare.com
                   </span>
                 </a>
