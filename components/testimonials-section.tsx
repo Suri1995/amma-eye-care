@@ -158,7 +158,7 @@ export function TestimonialsSection() {
               <Card 
                 key={index}
                 data-card
-                className="flex-shrink-0 snap-start group relative overflow-hidden border-0 bg-gradient-to-br from-gray-50 to-white shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
+                className="shrink-0 snap-start group relative overflow-hidden border-0 bg-linear-to-br from-gray-50 to-white shadow-md hover:shadow-xl transition-all duration-500 hover:-translate-y-1"
                 style={{ 
                   scrollSnapAlign: 'start',
                   // For desktop: exactly 1/3 of container width minus gaps
@@ -169,7 +169,7 @@ export function TestimonialsSection() {
               >
                 <CardContent className="p-5 sm:p-6">
                   {/* Quote icon */}
-                  <div className="mb-4 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl bg-gradient-to-br from-[#F22233] to-[#F22233]/80 shadow-lg shadow-[#F22233]/20">
+                  <div className="mb-4 inline-flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl sm:rounded-2xl bg-linear-to-br from-[#F22233] to-[#F22233]/80 shadow-lg shadow-[#F22233]/20">
                     <Quote className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                   </div>
 
@@ -190,7 +190,7 @@ export function TestimonialsSection() {
 
                   {/* Author */}
                   <div className="flex items-center gap-3 sm:gap-4 border-t border-gray-100 pt-4 sm:pt-5">
-                    <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-gradient-to-br from-[#3B2E8C] to-[#1F5AA6] text-sm sm:text-base font-bold text-white shadow-lg">
+                    <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-linear-to-br from-[#3B2E8C] to-[#1F5AA6] text-sm sm:text-base font-bold text-white shadow-lg">
                       {testimonial.initials}
                     </div>
                     <div className="flex-1 min-w-0">

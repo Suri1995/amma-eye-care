@@ -13,7 +13,6 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react"
-import Link from "next/link"
 
 const services = [
   {
@@ -199,14 +198,14 @@ export function ServicesSection() {
                   >
                     {/* Animated bottom accent bar */}
                     <span
-                      className={`absolute bottom-0 left-0 right-0 h-[3px] ${service.barColor} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-[350ms]`}
+                      className={`absolute bottom-0 left-0 right-0 h-0.75 ${service.barColor} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-350`}
                       aria-hidden="true"
                     />
 
                     <div className="flex flex-col flex-1 p-5 sm:p-6">
                       {/* Icon */}
                       <div
-                        className={`mb-4 inline-flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl ${service.iconBg} text-white shadow-md group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300`}
+                        className={`mb-4 inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${service.iconBg} text-white shadow-md group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-300`}
                         aria-hidden="true"
                       >
                         <Icon className="h-7 w-7" strokeWidth={1.75} />
@@ -292,10 +291,10 @@ export function ServicesSection() {
             className="rounded-full border-2 border-[#3B2E8C] text-[#3B2E8C] hover:bg-[#3B2E8C] hover:text-white px-8 h-12 sm:h-14 text-sm sm:text-base transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:ring-2 focus-visible:ring-[#1F5AA6] focus-visible:ring-offset-2"
             asChild
           >
-            <Link href="#contact">
+            <a href="#contact">
               View All Services
               <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" aria-hidden="true" />
-            </Link>
+            </a>
           </Button>
         </div>
 

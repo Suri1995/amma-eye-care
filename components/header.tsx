@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -42,10 +41,10 @@ export function Header() {
     <header className={`sticky top-0 z-50 w-full transition-all duration-500 ${isScrolled ? "shadow-xl shadow-black/5" : ""}`}>
 
       {/* Top info bar */}
-      <div className="bg-gradient-to-r from-[#3B2E8C] via-[#3B2E8C] to-[#1F5AA6] text-white overflow-hidden">
+      <div className="bg-linear-to-r from-[#3B2E8C] via-[#3B2E8C] to-[#1F5AA6] text-white overflow-hidden">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:py-2.5">
           <div className="flex items-center gap-2 overflow-hidden md:pl-2">
-            <span className="flex-shrink-0 rounded-full bg-[#F22233] px-2.5 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wide animate-pulse">
+            <span className="shrink-0 rounded-full bg-[#F22233] px-2.5 py-1 text-[10px] sm:text-xs font-bold uppercase tracking-wide animate-pulse">
               Open Today
             </span>
             <span className="hidden sm:flex items-center gap-1.5 text-xs sm:text-sm text-white/90">
@@ -117,10 +116,10 @@ export function Header() {
           {/* CTA button */}
           <div className="hidden lg:flex items-center gap-3">
             <Button asChild className="bg-[#F22233] text-white hover:bg-[#d91e2c] shadow-lg shadow-[#F22233]/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#F22233]/30 hover:scale-105 btn-shine">
-              <Link href="/contact">
+              <a href="#contact">
                 Book Appointment
                 <ChevronRight className="ml-1 h-4 w-4" />
-              </Link>
+              </a>
             </Button>
           </div>
 
@@ -140,8 +139,8 @@ export function Header() {
                 </Button>
               </SheetTrigger>
 
-              <SheetContent side="right" className="w-[300px] sm:w-[350px] p-0 border-l-0">
-                <div className="flex h-full flex-col bg-gradient-to-b from-white to-gray-50">
+              <SheetContent side="right" className="w-75 sm:w-87.5 p-0 border-l-0">
+                <div className="flex h-full flex-col bg-linear-to-b from-white to-gray-50">
 
                   {/* Mobile header */}
                   <div className="flex items-center justify-between border-b border-gray-100 p-4 sm:p-5 bg-white">
@@ -177,10 +176,10 @@ export function Header() {
                   {/* Footer */}
                   <div className="border-t border-gray-100 p-4 sm:p-5 bg-white space-y-3">
                     <Button className="w-full h-12 bg-[#F22233] text-white hover:bg-[#d91e2c] shadow-lg text-base" asChild>
-                      <Link href="/contact">
+                      <a href="#contact">
                         Book Appointment
                         <ChevronRight className="ml-2 h-4 w-4" />
-                      </Link>
+                      </a>
                     </Button>
                   </div>
 

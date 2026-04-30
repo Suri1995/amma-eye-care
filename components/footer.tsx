@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { Phone, Mail, MapPin, Facebook, Instagram, Youtube, Twitter, ArrowUp, Heart, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -95,7 +94,7 @@ export function Footer() {
         <div className="grid gap-0 md:gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand column - always visible, no dropdown */}
           <div className="md:col-span-2 lg:col-span-1 pb-6 md:pb-0 border-b border-white/10 md:border-none">
-            <Link href="#" className="mb-5 sm:mb-6 flex items-center gap-2 sm:gap-3 group inline-flex">
+            <a href="#" className="mb-5 sm:mb-6 flex items-center gap-2 sm:gap-3 group inline-flex">
               <Image
                             src="/amma-eye-care-logo.png"
                             alt="Amma Eye Care"
@@ -104,7 +103,7 @@ export function Footer() {
                             priority
                             className="h-10 w-auto object-contain transition-opacity duration-200 group-hover:opacity-85"
                           />
-            </Link>
+            </a>
             <p className="mb-5 sm:mb-6 text-gray-700 text-sm leading-relaxed max-w-xs">
               Providing exceptional eye care services since 1998. Your vision is our mission. 
               Experience world-class treatment with compassionate care.
@@ -130,13 +129,13 @@ export function Footer() {
             <ul className="space-y-2 sm:space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <Link 
+                  <a 
                     href={link.href}
                     className="text-sm text-secondary transition-all duration-300 hover:text-white hover:translate-x-1 inline-flex items-center gap-2"
                   >
                     <span className="h-1 w-1 rounded-full bg-secondary" />
                     {link.name}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -147,13 +146,13 @@ export function Footer() {
             <ul className="space-y-2 sm:space-y-3">
               {services.map((service) => (
                 <li key={service.name}>
-                  <Link 
+                  <a 
                     href={service.href}
                     className="text-sm text-secondary transition-all duration-300 hover:text-white hover:translate-x-1 inline-flex items-center gap-2"
                   >
                     <span className="h-1 w-1 rounded-full bg-secondary" />
                     {service.name}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>
@@ -163,7 +162,7 @@ export function Footer() {
           <FooterDropdown title="Contact Info">
             <ul className="space-y-3 sm:space-y-4">
               <li className="flex items-start gap-3">
-                <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10">
                   <MapPin className="h-4 w-4 text-[#F22233]" />
                 </div>
                 <span className="text-sm text-secondary leading-relaxed">
@@ -172,7 +171,7 @@ export function Footer() {
               </li>
               <li>
                 <a href="tel:+911234567890" className="flex items-center gap-3 group">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10 group-hover:bg-[#F22233] transition-colors">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10 group-hover:bg-[#F22233] transition-colors">
                     <Phone className="h-4 w-4 text-[#F22233] group-hover:text-white transition-colors" />
                   </div>
                   <span className="text-sm text-secondary group-hover:text-white transition-colors">
@@ -182,7 +181,7 @@ export function Footer() {
               </li>
               <li>
                 <a href="mailto:info@ammaeyecare.com" className="flex items-center gap-3 group">
-                  <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10 group-hover:bg-[#F22233] transition-colors">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#F22233]/10 group-hover:bg-[#F22233] transition-colors">
                     <Mail className="h-4 w-4 text-[#F22233] group-hover:text-white transition-colors" />
                   </div>
                   <span className="text-sm text-secondary group-hover:text-white transition-colors">
@@ -204,9 +203,9 @@ export function Footer() {
             for better vision.
           </p>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
-            <Link href="#" className="hover:text-white transition-colors">Sitemap</Link>
+            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+            <a href="#" className="hover:text-white transition-colors">Sitemap</a>
           </div>
         </div>
       </div>

@@ -72,7 +72,7 @@ export function FAQSection() {
     <section
       id="faqs"
       ref={sectionRef}
-      className="bg-gradient-to-b from-gray-50 to-white py-7 md:py-20"
+      className="bg-linear-to-b from-gray-50 to-white py-7 md:py-20"
     >
       <div className="mx-auto max-w-4xl px-4">
         {/* Section header */}
@@ -119,7 +119,7 @@ export function FAQSection() {
                   <span className="flex items-start sm:items-center gap-3 sm:gap-4 pr-4">
                     <span
                       aria-hidden="true"
-                      className={`flex h-7 w-7 sm:h-9 sm:w-9 flex-shrink-0 items-center justify-center rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-colors ${
+                      className={`flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-lg sm:rounded-xl text-xs sm:text-sm font-bold transition-colors ${
                         isOpen
                           ? "bg-[#F22233] text-white"
                           : "bg-[#3B2E8C]/10 text-[#3B2E8C]"
@@ -137,7 +137,7 @@ export function FAQSection() {
                   </span>
                   <div
                     aria-hidden="true"
-                    className={`flex h-7 w-7 sm:h-9 sm:w-9 flex-shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
+                    className={`flex h-7 w-7 sm:h-9 sm:w-9 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
                       isOpen
                         ? "bg-[#F22233] text-white rotate-180"
                         : "bg-gray-100 text-gray-500"

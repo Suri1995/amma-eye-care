@@ -3,7 +3,6 @@
 import { useEffect, useState, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Star, Calendar, Shield, Phone, MapPin, MessageCircle, CheckCircle, ArrowRight } from "lucide-react"
-import Link from "next/link"
 
 /* ─────────────────────────────────────────
    Animated counter
@@ -374,11 +373,11 @@ export function HeroSection() {
     >
       {/* Ambient background — purely decorative */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-        <div className="absolute top-[-15%] right-[-8%] w-[55vw] h-[55vw] max-w-[680px] max-h-[680px] rounded-full opacity-[0.07]"
+        <div className="absolute top-[-15%] right-[-8%] w-[55vw] h-[55vw] max-w-170 max-h-170 rounded-full opacity-[0.07]"
           style={{ background: "radial-gradient(circle, #D41A2B 0%, transparent 70%)", animation: "heroPulse 8s ease-in-out infinite" }} />
-        <div className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] max-w-[750px] max-h-[750px] rounded-full opacity-[0.07]"
+        <div className="absolute bottom-[-20%] left-[-10%] w-[60vw] h-[60vw] max-w-187.5 max-h-187.5 rounded-full opacity-[0.07]"
           style={{ background: "radial-gradient(circle, #3B2E8C 0%, transparent 70%)", animation: "heroPulse 10s ease-in-out infinite 2s" }} />
-        <div className="absolute top-[30%] left-[40%] w-[35vw] h-[35vw] max-w-[400px] max-h-[400px] rounded-full opacity-[0.05]"
+        <div className="absolute top-[30%] left-[40%] w-[35vw] h-[35vw] max-w-100 max-h-100 rounded-full opacity-[0.05]"
           style={{ background: "radial-gradient(circle, #1F5AA6 0%, transparent 70%)", animation: "heroPulse 7s ease-in-out infinite 1s" }} />
         <div className="absolute inset-0 opacity-[0.025]"
           style={{ backgroundImage: "radial-gradient(circle, #3B2E8C 1px, transparent 1px)", backgroundSize: "36px 36px" }} />
@@ -400,10 +399,10 @@ export function HeroSection() {
 
         {/* ── Mobile / tablet layout ── */}
         <div className="lg:hidden flex flex-col items-center gap-8">
-          <div className={`relative w-full max-w-[300px] sm:max-w-[360px] md:max-w-[400px] transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+          <div className={`relative w-full max-w-75 sm:max-w-90 md:max-w-100 transition-all duration-700 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
             <div className="absolute inset-[-6%] rounded-[36px] opacity-40 pointer-events-none"
               style={{ background: "linear-gradient(135deg, rgba(59,46,140,0.06), rgba(212,26,43,0.04))", border: "1px solid rgba(59,46,140,0.08)" }} />
-            <div className="relative aspect-[4/3] w-full p-3 sm:p-5">
+            <div className="relative aspect-4/3 w-full p-3 sm:p-5">
               <EyeAnimation />
             </div>
           </div>
@@ -500,11 +499,11 @@ function LeftContent() {
 
       {/* Eyebrow */}
       <div className="mb-3 flex items-center gap-2.5 justify-center lg:justify-start">
-        <div className="h-px w-8 bg-gradient-to-r from-[#D41A2B] to-[#F22233]" />
+        <div className="h-px w-8 bg-linear-to-r from-[#D41A2B] to-[#F22233]" />
         <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#D41A2B]">
           Amma Eye Care Hospital
         </span>
-        <div className="h-px w-8 bg-gradient-to-l from-[#D41A2B] to-[#F22233] lg:hidden" />
+        <div className="h-px w-8 bg-linear-to-l from-[#D41A2B] to-[#F22233] lg:hidden" />
       </div>
 
       {/* H1 */}
@@ -540,7 +539,7 @@ function LeftContent() {
       <div className="mb-8 grid grid-cols-2 gap-x-5 gap-y-3 w-full">
         {["Painless procedures", "Quick recovery", "Affordable care", "Latest technology"].map((f) => (
           <div key={f} className="flex items-center gap-2 text-[13px] sm:text-sm text-gray-600 font-medium">
-            <div className="flex-shrink-0 h-5 w-5 rounded-full bg-red-50 flex items-center justify-center">
+            <div className="shrink-0 h-5 w-5 rounded-full bg-red-50 flex items-center justify-center">
               <CheckCircle className="h-4 w-4 text-[#D41A2B]" />
             </div>
             {f}
@@ -558,10 +557,10 @@ function LeftContent() {
             boxShadow: "0 8px 28px rgba(212,26,43,0.32), inset 0 1px 0 rgba(255,255,255,0.15)",
           }}
         >
-          <Link href="#contact">
+          <a href="#contact">
             Book Appointment
             <ArrowRight className="ml-2 h-4 w-4" aria-hidden="true" />
-          </Link>
+          </a>
         </Button>
         <Button
           size="lg" variant="outline" asChild
@@ -609,7 +608,7 @@ function LeftContent() {
 ───────────────────────────────────────── */
 function RightEye() {
   return (
-    <div className="relative mx-auto w-full max-w-[430px] xl:max-w-[480px]">
+    <div className="relative mx-auto w-full max-w-120 xl:max-w-120">
       <div
         className="absolute inset-[-6%] rounded-[40px] opacity-40 pointer-events-none"
         style={{
@@ -617,7 +616,7 @@ function RightEye() {
           border: "1px solid rgba(59,46,140,0.08)",
         }}
       />
-      <div className="relative aspect-[4/3] w-full p-4 sm:p-6">
+      <div className="relative aspect-4/3 w-full p-4 sm:p-6">
         <EyeAnimation />
       </div>
 

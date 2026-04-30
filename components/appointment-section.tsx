@@ -55,8 +55,8 @@ export function AppointmentSection() {
           {locations.map((loc) => (
             <div key={loc.branch} className="overflow-hidden rounded-2xl border border-gray-100 shadow-xl shadow-gray-200/50">
               {/* Card Header */}
-              <div className={`bg-gradient-to-r ${loc.headerGradient} px-6 py-5 flex items-center gap-4`}>
-                <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-white/20">
+              <div className={`bg-linear-to-r ${loc.headerGradient} px-6 py-5 flex items-center gap-4`}>
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/20">
                   <MapPin className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -75,7 +75,7 @@ export function AppointmentSection() {
 
                 {/* Phone */}
                 <div className="py-3 flex gap-3 items-start">
-                  <div className={`mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${loc.iconBg}`}>
+                  <div className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${loc.iconBg}`}>
                     <Phone className={`h-4 w-4 ${loc.iconColor}`} />
                   </div>
                   <div>
@@ -88,7 +88,7 @@ export function AppointmentSection() {
 
                 {/* Email */}
                 <div className="py-3 flex gap-3 items-start">
-                  <div className={`mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${loc.iconBg}`}>
+                  <div className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${loc.iconBg}`}>
                     <Mail className={`h-4 w-4 ${loc.iconColor}`} />
                   </div>
                   <div>
@@ -99,7 +99,7 @@ export function AppointmentSection() {
 
                 {/* Address */}
                 <div className="py-3 flex gap-3 items-start">
-                  <div className={`mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg ${loc.iconBg}`}>
+                  <div className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg ${loc.iconBg}`}>
                     <MapPin className={`h-4 w-4 ${loc.iconColor}`} />
                   </div>
                   <div>
@@ -112,7 +112,7 @@ export function AppointmentSection() {
 
                 {/* Hours */}
                 <div className="py-3 flex gap-3 items-start">
-                  <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-amber-50">
+                  <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-50">
                     <Clock className="h-4 w-4 text-amber-500" />
                   </div>
                   <div>

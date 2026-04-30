@@ -2,7 +2,6 @@
 
 import { Clock, Award, Heart, Zap, Users, Shield, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 const features = [
   {
@@ -57,9 +56,9 @@ const features = [
 
 export function WhyUsSection() {
   return (
-    <section id="why-us" className="relative bg-gradient-to-b from-gray-50 to-white py-7 md:py-20 overflow-hidden">
+    <section id="why-us" className="relative bg-linear-to-b from-gray-50 to-white py-7 md:py-20 overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#F22233]/20 to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-[#F22233]/20 to-transparent" />
       <div className="absolute -left-40 top-1/4 h-80 w-80 rounded-full bg-[#3B2E8C]/5 blur-3xl" />
       <div className="absolute -right-40 bottom-1/4 h-80 w-80 rounded-full bg-[#F22233]/5 blur-3xl" />
 
@@ -104,14 +103,14 @@ export function WhyUsSection() {
               </p>
 
               {/* Bottom border animation */}
-              <div className="absolute bottom-0 left-0 h-1 w-0 bg-gradient-to-r from-[#F22233] to-[#3B2E8C] transition-all duration-500 group-hover:w-full" />
+              <div className="absolute bottom-0 left-0 h-1 w-0 bg-linear-to-r from-[#F22233] to-[#3B2E8C] transition-all duration-500 group-hover:w-full" />
             </div>
           ))}
         </div>
 
         {/* CTA */}
         <div className="mt-10 sm:mt-14 text-center">
-          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-6 rounded-2xl bg-gradient-to-r from-[#3B2E8C]/5 to-[#F22233]/5 border border-gray-100">
+          <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-4 sm:p-6 rounded-2xl bg-linear-to-r from-[#3B2E8C]/5 to-[#F22233]/5 border border-gray-100">
             <p className="text-sm sm:text-base text-gray-700 font-medium text-center sm:text-left">
               Ready to experience the best in eye care?
             </p>
@@ -119,10 +118,10 @@ export function WhyUsSection() {
               className="bg-[#F22233] text-white hover:bg-[#d91e2c] shadow-lg shadow-[#F22233]/20 h-11 sm:h-12 px-6 sm:px-8 text-sm sm:text-base"
               asChild
             >
-              <Link href="#contact">
+              <a href="#contact">
                 Book Your Visit
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
+              </a>
             </Button>
           </div>
         </div>

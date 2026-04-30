@@ -13,7 +13,6 @@ import {
   ChevronLeft,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 
 type Doctor = {
   id: string
@@ -276,7 +275,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
               className="flex items-start gap-2.5 rounded-xl bg-gray-50 border border-gray-100 px-3 py-2.5 hover:border-gray-200 transition-colors group"
             >
               <div
-                className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-lg ${q.bg} group-hover:scale-105 transition-transform mt-0.5`}
+                className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${q.bg} group-hover:scale-105 transition-transform mt-0.5`}
                 aria-hidden="true"
               >
                 <q.Icon className={`h-3.5 w-3.5 ${q.color}`} />
@@ -299,7 +298,7 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
             {doctor.specializations.map((skill) => (
               <li key={skill}>
                 <span className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2.5 py-1 text-[11px] font-medium text-gray-700 hover:bg-[#3B2E8C]/10 hover:text-[#3B2E8C] transition-colors border border-transparent hover:border-[#3B2E8C]/15 cursor-default">
-                  <CheckCircle className="h-3 w-3 text-[#F22233] flex-shrink-0" aria-hidden="true" />
+                  <CheckCircle className="h-3 w-3 text-[#F22233] shrink-0" aria-hidden="true" />
                   {skill}
                 </span>
               </li>
@@ -313,10 +312,10 @@ function DoctorCard({ doctor }: { doctor: Doctor }) {
             className="w-full bg-[#F22233] text-white hover:bg-[#d91e2c] active:scale-[0.97] shadow-md shadow-[#F22233]/20 hover:shadow-lg hover:shadow-[#F22233]/25 h-10 text-sm font-semibold rounded-xl transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#F22233] focus-visible:ring-offset-2"
             asChild
           >
-            <Link href="#contact" aria-label={`Book consultation with ${doctor.name}`}>
+            <a href="#contact" aria-label={`Book consultation with ${doctor.name}`}>
               <CalendarCheck className="mr-2 h-4 w-4" aria-hidden="true" />
               Book Consultation
-            </Link>
+            </a>
           </Button>
         </div>
       </div>
@@ -364,7 +363,7 @@ function MobileCarousel({ doctors }: { doctors: Doctor[] }) {
           {doctors.map((doctor, i) => (
             <div
               key={doctor.id}
-              className="w-full flex-shrink-0"
+              className="w-full shrink-0"
               role="group"
               aria-roledescription="slide"
               aria-label={`${i + 1} of ${doctors.length}: ${doctor.name}`}
@@ -433,7 +432,7 @@ export function DoctorsSection() {
   return (
     <section
       id="doctor"
-      className="relative bg-gradient-to-b from-gray-50 to-white py-10 sm:py-14 md:py-20 overflow-hidden"
+      className="relative bg-linear-to-b from-gray-50 to-white py-10 sm:py-14 md:py-20 overflow-hidden"
       aria-labelledby="doctor-heading"
     >
       {/* Bg orbs */}
@@ -482,7 +481,7 @@ export function DoctorsSection() {
                 }`}
               >
                 <div
-                  className={`flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl transition-colors ${
+                  className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-colors ${
                     isActive ? "bg-white/20" : "bg-[#3B2E8C]/10 group-hover:bg-[#3B2E8C]/20"
                   }`}
                   aria-hidden="true"
@@ -498,7 +497,7 @@ export function DoctorsSection() {
                   </p>
                 </div>
                 <ChevronRight
-                  className={`h-4 w-4 flex-shrink-0 ml-1 transition-all duration-200 ${
+                  className={`h-4 w-4 shrink-0 ml-1 transition-all duration-200 ${
                     isActive
                       ? "text-white rotate-90"
                       : "text-gray-400 group-hover:text-[#3B2E8C] group-hover:translate-x-0.5"
@@ -518,11 +517,11 @@ export function DoctorsSection() {
           aria-atomic="true"
         >
           <div className="flex items-center gap-2 min-w-0">
-            <MapPin className="h-3.5 w-3.5 text-[#3B2E8C] flex-shrink-0" aria-hidden="true" />
+            <MapPin className="h-3.5 w-3.5 text-[#3B2E8C] shrink-0" aria-hidden="true" />
             <span className="text-xs font-semibold text-[#3B2E8C] truncate">{activeBranch.name}</span>
             <span className="text-xs text-gray-500 hidden sm:inline">— {activeBranch.address}</span>
           </div>
-          <span className="flex-shrink-0 inline-flex items-center gap-1 rounded-full bg-[#3B2E8C]/10 px-2.5 py-1 text-[11px] font-semibold text-[#3B2E8C]">
+          <span className="shrink-0 inline-flex items-center gap-1 rounded-full bg-[#3B2E8C]/10 px-2.5 py-1 text-[11px] font-semibold text-[#3B2E8C]">
             <Users className="h-3 w-3" aria-hidden="true" />
             {activeBranch.doctors.length} doctor{activeBranch.doctors.length > 1 ? "s" : ""}
           </span>

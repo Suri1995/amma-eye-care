@@ -82,7 +82,7 @@ const GalleryItem = ({
       className="group relative w-full h-full cursor-pointer overflow-hidden rounded-xl sm:rounded-2xl transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B2E8C] focus-visible:ring-offset-2 hover:shadow-xl active:scale-[0.98]"
     >
       {/* Gradient background */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${image.color}`} aria-hidden="true" />
+      <div className={`absolute inset-0 bg-linear-to-br ${image.color}`} aria-hidden="true" />
 
       {/* Dot-pattern overlay */}
       <div
@@ -113,7 +113,7 @@ const GalleryItem = ({
       {/* Hover dark scrim */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-200 pointer-events-none"
+        className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 transition-opacity duration-200 pointer-events-none"
       />
 
       {/* Title card — slides up on hover/focus */}
@@ -229,7 +229,7 @@ const Lightbox = ({
         role="img"
         aria-label={image.alt}
       >
-        <div className={`w-full h-full bg-gradient-to-br ${image.color} flex items-center justify-center relative`}>
+        <div className={`w-full h-full bg-linear-to-br ${image.color} flex items-center justify-center relative`}>
           <div
             aria-hidden="true"
             className="absolute inset-0 opacity-10 pointer-events-none"
@@ -252,7 +252,7 @@ const Lightbox = ({
               </svg>
             </div>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent p-5 sm:p-6 md:p-8">
+          <div className="absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/90 via-black/60 to-transparent p-5 sm:p-6 md:p-8">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">{image.title}</h2>
             <p className="text-white/80 text-sm sm:text-base md:text-lg mb-3 max-w-2xl">{image.description}</p>
             <div className="flex flex-wrap gap-2 mt-2">
@@ -373,7 +373,7 @@ export function GallerySection() {
 
         {/* ── Section header ── */}
         <div className="mx-auto mb-12 sm:mb-16 md:mb-20 max-w-3xl text-center">
-          <div className="inline-flex items-center gap-2 mb-4 sm:mb-5 px-4 py-1.5 rounded-full bg-gradient-to-r from-[#1F5AA6]/10 to-[#3B2E8C]/10 border border-[#1F5AA6]/20">
+          <div className="inline-flex items-center gap-2 mb-4 sm:mb-5 px-4 py-1.5 rounded-full bg-linear-to-r from-[#1F5AA6]/10 to-[#3B2E8C]/10 border border-[#1F5AA6]/20">
             <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-[#1F5AA6]" aria-hidden="true" />
             <span className="text-[#1F5AA6] text-xs sm:text-sm font-semibold tracking-wide">Our Facility</span>
           </div>
@@ -504,7 +504,7 @@ export function GallerySection() {
         <div className="flex justify-center mt-12 sm:mt-16">
           <button
             onClick={() => setSelectedIndex(0)}
-            className="group flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-gradient-to-r from-[#3B2E8C] to-[#1F5AA6] text-white font-semibold text-sm sm:text-base shadow-md hover:shadow-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B2E8C] focus-visible:ring-offset-2 active:scale-[0.98]"
+            className="group flex items-center gap-2 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full bg-linear-to-r from-[#3B2E8C] to-[#1F5AA6] text-white font-semibold text-sm sm:text-base shadow-md hover:shadow-lg transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3B2E8C] focus-visible:ring-offset-2 active:scale-[0.98]"
             aria-label="Open full gallery slideshow"
           >
             <Eye className="h-4 w-4 group-hover:scale-110 transition-transform" aria-hidden="true" />
